@@ -62,7 +62,12 @@ class MyHomePage extends StatelessWidget {
               style: TextStyle(fontSize: 16),
             ),
             const SizedBox(height: 20),
-            BlocBuilder<CounterBloc, CounterState>(
+            BlocConsumer<CounterBloc, CounterState>(
+               listener: (context,state){
+                  if(state.count==3){
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("count is 3"))); 
+                  }
+               },
               builder: (context, state) {
                 return Text(
                   state.count.toString(),
@@ -81,14 +86,14 @@ class MyHomePage extends StatelessWidget {
               ));
               }
             ),
-            BlocListener<CounterBloc,CounterState>(
-              listener: (context,state){
-                  if(state.count==3){
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("count is 3"))); 
-                  }
-              },
-              child:Text("Bloc Listener")
-              ),
+            // BlocListener<CounterBloc,CounterState>(
+            //   listener: (context,state){
+            //       if(state.count==3){
+            //         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("count is 3"))); 
+            //       }
+            //   },
+            //   child:Text("Bloc Listener")
+            //   ),
             const SizedBox(height: 40),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
