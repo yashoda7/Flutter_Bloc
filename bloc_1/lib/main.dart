@@ -81,6 +81,14 @@ class MyHomePage extends StatelessWidget {
               ));
               }
             ),
+            BlocListener<CounterBloc,CounterState>(
+              listener: (context,state){
+                  if(state.count==3){
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("count is 3"))); 
+                  }
+              },
+              child:Text("Bloc Listener")
+              ),
             const SizedBox(height: 40),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
