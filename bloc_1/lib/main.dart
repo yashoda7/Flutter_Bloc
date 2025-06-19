@@ -1,4 +1,7 @@
+import 'package:bloc_1/visibility_bloc/visibility_bloc.dart';
+import 'package:bloc_1/visibility_bloc/visibility_event.dart';
 import 'package:flutter/material.dart';
+import 'package:bloc_1/visibility_bloc/visibity_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bloc_1/Bloc/counter_bloc.dart';
 import 'package:bloc_1/Bloc/counter_event.dart';
@@ -19,10 +22,19 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: BlocProvider(
-        create: (_) => CounterBloc(),
-        child: const MyHomePage(title: 'Counter using BLoC'),
-      ),
+      // home: BlocProvider(
+      //   create: (_) => CounterBloc(),
+      //   child: const MyHomePage(title: 'Counter using BLoC'),
+      // ),
+      home: MultiBlocProvider(
+        providers: [
+           BlocProvider(
+        create: (_) => CounterBloc(),),
+         BlocProvider(
+        create: (_) => VisibilityBloc(),),
+
+        ],
+         child:const MyHomePage(title: 'Counter using BLoC'), ),
     );
   }
 }
@@ -58,6 +70,17 @@ class MyHomePage extends StatelessWidget {
                 );
               },
             ),
+            BlocBuilder<VisibilityBloc,VisibityState>(
+              builder: (context, state) {
+              return Visibility(
+                visible: state.show,
+                child: Container(
+                  color: Colors.purple,
+                  width: 200,
+                  height: 200,                        
+              ));
+              }
+            ),
             const SizedBox(height: 40),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -74,9 +97,17 @@ class MyHomePage extends StatelessWidget {
                   icon: const Icon(Icons.add_circle_outline),
                   iconSize: 40,
                   onPressed: () {
-                     context.read<CounterBloc>().add(CountDecrementEvent());
+                     context.read<CounterBloc>().add(CountIncrementEvent());
                   },
                 ),
+                TextButton(onPressed: (){
+                  context.read<VisibilityBloc>().add(VisibilityShowEvent());
+                },
+                 child: Text("show")),
+                 TextButton(onPressed: (){
+                    context.read<VisibilityBloc>().add(VisibilityHideEvent());
+                 },
+                  child: Text("Hide"))
               ],
             ),
           ],
