@@ -34,7 +34,7 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final countBloc = context.read<CounterBloc>();
+    // final countBloc = context.read<CounterBloc>();
 
     return Scaffold(
       appBar: AppBar(
@@ -66,7 +66,7 @@ class MyHomePage extends StatelessWidget {
                   icon: const Icon(Icons.remove_circle_outline),
                   iconSize: 40,
                   onPressed: () {
-                    countBloc.add(CountDecrementEvent());
+                    context.read<CounterBloc>().add(CountDecrementEvent());
                   },
                 ),
                 const SizedBox(width: 30),
@@ -74,7 +74,7 @@ class MyHomePage extends StatelessWidget {
                   icon: const Icon(Icons.add_circle_outline),
                   iconSize: 40,
                   onPressed: () {
-                    countBloc.add(CountIncrementEvent());
+                     context.read<CounterBloc>().add(CountDecrementEvent());
                   },
                 ),
               ],
